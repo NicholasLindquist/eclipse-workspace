@@ -1,0 +1,199 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="utilities.css">
+    <title>Utilities</title>
+</head>
+<script type="text/javascript" language="javascript">
+
+function UserAction() {
+    var xhttp = new XMLHttpRequest();
+   
+    xhttp.open("GET", "rest/controller/hello", false);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send();
+    //var response = JSON.parse(xhttp.responseText);
+    var response = xhttp.responseText;
+    
+   
+}
+
+function searchPeople() 
+{
+  var input = document.getElementById('toUser').value.toLowerCase(),
+      len = input.length,
+      output = document.getElementById('realitems').options;
+  for(var i=0; i<output.length; i++)
+    if (output[i].text.toLowerCase().slice(0, len) == input){
+      	output[i].selected = true;
+  		document.getElementById('user').innerHTML = output[i].text;
+    }
+  if (input == ''){
+    output[0].selected = true;
+  }
+}
+
+
+function onStudentSelect(){
+	var selectedStudent = document.getElementById('realitems').value;
+	var student = document.getElementById('realitems').options;
+	document.getElementById('user').innerHTML = student[selectedStudent].text;
+	document.getElementById('userImage').src = 'https://randomuser.me/api/portraits/women/4.jpg';
+	
+}
+
+
+function showHistoryOnClick(){
+	 var xhttp = new XMLHttpRequest();
+	 var table = document.getElementById("historyTable");
+	 var rows = table.rows;
+	   
+	 xhttp.open("GET", "rest/controller/getHistory", false);
+	 xhttp.setRequestHeader("Content-type", "application/json");
+	 xhttp.send();
+	 
+	 var response = JSON.parse(xhttp.responseText);
+	 
+	
+	 
+	 for(var i = 0; i < response.length; i++){
+		 var rec = response[i];
+		 var d = new Date(rec.date);
+		 var comment = '<th>' + rec.comments + '</th>';
+		 var date = '<th>' + d + '</th>';
+		 var result = '<th>' + rec.result + '</th>';
+		 rows[i+1].innerHTML = date + result + comment;
+	 }
+	 
+	 //var header = '<tr><th>Date</th><th>Did Pass Ling Tests</th><th>Comments</th></tr>';
+	 //document.getElementById("historyTable").tHead.innerHTML = header;
+	 
+	 
+}
+</script>
+
+
+
+<body>
+
+
+
+
+    <div class="lingTestContent">
+
+        <div class="card announcement">
+            <form class="new-message">
+                <div class="div-inline">
+                    <form for="toUser" style="color:white">Search Student:<input id="toUser" type="text" style="background-color:#7e57c2;" placeholder="Jennifer" onkeyup="searchPeople()">
+      					<!--<select id="realitems" onChange="onStudentSelect()">
+        						<option value="">select...</option>
+        						<option value="1">Jennifer</option>
+        						<option value="2">Robby</option>
+        						<option value="3">Shawn</option>
+        						<option value="4">Josh</option>
+        						<option value="5">Nick</option>
+      					</select>  -->
+      				</form>
+                </div>
+            </form>
+            <div class="header">
+                <img id="userImage" src="https://randomuser.me/api/portraits/women/1.jpg" />
+                <div class="lingTest">
+                    <h3 class="user-header" id="user"></h3>
+                    <label class="switch">
+                        <div style="width:275px; position:absolute; color:white">Did Jennifer identify all ling sounds?</div>
+                    </label>
+
+                    <label class="switch">
+                        <input type="checkbox" id="togBtn">
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+
+            </div>
+            <div class="comment">
+                <textarea maxlength="500" minlength="0" style="width:300px; color:white" placeholder="Enter any comments or errors..." rows="3"></textarea>
+                <br />
+                <button type="button" class="comment-save">Save Test</button>
+                <button type="button" class="comment-show" onClick="showHistoryOnClick()">Show History</button>
+            </div>
+        </div>
+
+    </div>
+    
+        <div class="lingTestContent">
+
+        		<div class="card announcement">
+        			<details>
+                    <summary style="color:white">
+                        Notify Another User
+                    </summary>
+                    <div class="header">
+                			<h3 class="user-header"></h3>
+                			<div class="lingTest">
+                			<form for="toUser" style="margin-top:10px;"><input id="toUser" type="text" style="background-color:#7e57c2;" placeholder="Find User" onkeyup="searchPeople()">
+                			</form>
+                			 	<div class="comment">
+                					<textarea maxlength="500" minlength="0" style="width:300px; color:white" placeholder="Enter any comments or errors..." rows="3"></textarea>
+                					<br/>
+                					<button type="button" class="comment-send">Send</button>
+                				</div>
+                				</div>
+                		</div>	
+        			</details>
+        		</div>
+        </div>
+
+    <div class="lingTestContent">
+
+        <div class="card announcement">
+        	<details>
+                    <summary style="color:white">
+                        See Jennifer's History
+                    </summary>
+            <div class="header">
+                <h3 class="user-header"></h3>
+
+                <table id = "historyTable" style="color:white;">
+                		<thead>
+                    		<tr style="color:white; background-color:#7e57c2">
+                        		<th>Date</th>
+                        		<th>Ling Results</th>
+                        		<th>Comments</th>
+                    		</tr>
+                    </thead>
+                    <tr>
+                        <td>01/06/17</td>
+                        <td>Y</td>
+                        <td>Jennifer did a great job passing all Ling sound tests!</td>
+                    </tr>
+                    <tr>
+                        <td>01/07/17</td>
+                        <td>N</td>
+                        <td>Jennifer struggled...</td>
+                    </tr>
+                    <tr>
+                        <td>01/08/17</td>
+                        <td>N</td>
+                        <td>She almost passed.</td>
+                    </tr>
+                    <tr>
+                        <td>I01/09/17</td>
+                        <td>Y</td>
+                        <td>:)</td>
+                    </tr>
+                                        <tr>
+                        <td>I01/09/17</td>
+                        <td>Y</td>
+                        <td>:)</td>
+                    </tr>
+                </table>
+            </div>
+            </details>
+        </div>
+    </div>
+
+</body>
+
+</html>
