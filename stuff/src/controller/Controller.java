@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import model.HistoryModel;
 
@@ -24,7 +24,7 @@ public class Controller {
 	private static final String USER_NAME = "sum17cs3750";
 	private static final String PASSWORD = "Hello123";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String CONNECTION = "jdbc:mysql://localhost:3306/sum17cs3750";
+	private static final String CONNECTION = "jdbc:mysql://localhost:3306/sum17cs3750?useSSL=false&verifyServerCertificate=false";
 	
 	private static Connection getDBConnection() {
 		 Connection dbConnection = null;

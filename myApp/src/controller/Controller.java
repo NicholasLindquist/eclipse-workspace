@@ -22,9 +22,9 @@ import model.HistoryModel;
 public class Controller {
 	
 	private static final String USER_NAME = "sum17cs3750";
-	private static final String PASSWORD = "Hello123";
+	private static final String PASSWORD = "sum17cs3750";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String CONNECTION = "jdbc:mysql://localhost:3306/sum17cs3750";
+	private static final String CONNECTION = "jdbc:mysql://localhost:3306/sum17cs3750?useSSL=false&verifyServerCertificate=false";
 	
 	private static Connection getDBConnection() {
 		 Connection dbConnection = null;
